@@ -1,38 +1,35 @@
-var express = require('express');
-var app = express();
-const cors = require('cors');
-const morgan = require('morgan')
-const bodyParser = require('body-parser')
-const taskroute = require('./api/routes/taskroute');
+const express = require("express");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const taskRoute = require("./routes/task");
+const userRoute = require("./routes/user");
 
-//port
-const PORT = process.env.PORT || 3000;
+mongoose.connect("mongodb+srv://adarshmayya:devashyamayya3@cluster0-1jzgi.mongodb.net/test?retryWrites=true&w=majority")
+        .then(() => {
+            console.log("successfully connected to the MongoDB Atlas!");
+        })
+        .catch((error) => {
+            console.log("Unable to connect to the MongoDB Atlas!");
+            console.error(error);
+        });
 
 
-app.use(morgan('dev'))
-app.use(bodyParser.urlencoded({extended: false}));
+const app = express();
+
+//for jwt
 app.use(bodyParser.json());
-app.use(cors())
 
-//error message
-app.use((req,res,next) =>{
-    const error = new Error('Not found');
-    error.status=404;
-    next(error);
+// CORS
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    next();
 });
 
-app.use((error,req,res,next) =>{
-    res.status(error.status || 500)
-    res.json({
-        error: {
-            message: error.message
-        }
-    });
-})
+app.use("/api/task", taskRoute);
+app.use("/api/user", userRoute);
 
 
-app.use('/tasks',taskroute);
 
-app.listen(PORT, (req, res) => {
-    console.log(`Server Started at PORT ${PORT}`);
-  });
+module.exports = app;
