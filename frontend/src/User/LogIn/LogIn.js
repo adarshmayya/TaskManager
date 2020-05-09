@@ -2,6 +2,7 @@ import React from "react";
 import "./LogIn.css";
 import axios from "axios";
 import Config from "../../config";
+import { Link} from "react-router-dom";
 
 export default class LogIn extends React.Component {
     constructor(props) {
@@ -12,8 +13,10 @@ export default class LogIn extends React.Component {
         this.username = React.createRef();
         this.password = React.createRef();
 
-        this.authenticationHandler = this.props.onAuthentication;
+        this.authenticationHandler = this.props.onAuthentication
+        this.state= {isauthenticated:false}
     }
+   
 
     submitHandler(event) {
         // prevent default submit behaviour
@@ -32,10 +35,18 @@ export default class LogIn extends React.Component {
             password: pwd
         },{headers: { Authorization: `Bearer ${localStorage.authToken}`} })
             .then((res) => {
+                sessionStorage.setItem("isAuthenticated",true)
+               //this.setState ({isauthenticated:true})
                 console.log("authentication successfull");
-                this.authenticationHandler(res.data.token);
+               // this.authenticationHandler(res.data.token);
+                this.props.history.push("/");
             })
-            .catch(err => console.log(err));
+            .catch((err) => {
+                //this.setState ({isauthenticated:false})
+                console.log(err)
+                alert("invalid username or password")
+            })
+            
     }
 
     render() {
@@ -51,6 +62,9 @@ export default class LogIn extends React.Component {
                     <input type="password" placeholder="Enter Password" ref={this.password} name="psw" required />
                         
                     <button type="submit" className="login-btn">Log In</button>
+                    <Link to="/SignUp" >
+                    If you dont have account? SignUp
+                    </Link> 
                 </div>
             </form>
         );

@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import "./SignUp.css";
+import { Link} from "react-router-dom";
 
 import Config from "../../config";
 
@@ -37,6 +38,7 @@ export default class SignUp extends React.Component {
             }, {headers: { Authorization: `Bearer ${localStorage.authToken}`} })
                 .then((res) => {
                     console.log(res);
+                    this.props.history.push("/");
                 })
                 .catch(err => {
                     console.log(err);
@@ -64,6 +66,9 @@ export default class SignUp extends React.Component {
                     <input type="password" placeholder="Confirm Password" name="psw-confirm" ref={this.confirmPwd} required />
 
                     <button type="submit" className="signup-btn">Sign Up</button>
+                    <Link to="/Login" >
+                    already have an account? Login
+                    </Link>
                 </div>
             </form>
         );

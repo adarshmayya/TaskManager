@@ -1,65 +1,33 @@
 import React from "react";
 import axios from "axios";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Config from "./config";
-//import ToDoApp from "./ToDo/ToDoApp";
+import ToDoApp from "./ToDo/ToDoApp";
 import LogIn from "./User/LogIn/LogIn";
+import SignUp from "./User/SignUp/SignUp"
+import MainPage from "./User/MainPage"
+import Navbar from "./Navbar/Navbar"
 
-export default class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            task_list : [],
-            authenticated: false,
-        }
-        this.authenticationHandler = this.authenticationHandler.bind(this);
-        this.loadTaskData = this.loadTaskData.bind(this);
-    }
+function App() {
+  return (
+    
+          <BrowserRouter>
+            
+           {sessionStorage.getItem("isAuthenticated") ? <Navbar /> : null }
+              
+                <Switch>
+                  <Route path="/" exact component={MainPage} />
+                  <Route path="/login" component={LogIn} />
+                  <Route path="/signup" component={SignUp} />
+                </Switch>
+              
+           
+          </BrowserRouter>
+        );
+      }
+    
 
-    authenticationHandler(token) {
-        console.log("appjs authentication handler");
+export default App;   
 
-        // save token to the localStorage
-        localStorage.authToken = token;
 
-        this.loadTaskData((newList) => {
-            this.setState({
-                task_list: newList,
-                authenticated: true
-            });
-        });
-        
-    }
-
-    loadTaskData(callback) {
-        console.log("loading task data");
-        axios.get(Config.domain + "/task", {headers: { Authorization: `Bearer ${localStorage.authToken}`} })
-            .then(res => {
-                const newList = res.data;
-                console.log("data received");
-                callback(newList);
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    }
-
-    componentWillMount() {
-        this.loadTaskData((newList) => {
-            this.setState({
-                task_list: newList,
-                authenticated: true
-            });
-        });
-    }
-
-    render() {
-        console.log("Rendering App.js");
-
-        let child = <LogIn jwt={this.state.jwt} onAuthentication={this.authenticationHandler}/>;
-         if (this.state.authenticated) {
-            //child = <ToDoApp taskList={this.state.task_list}/>
-        }
-
-        return child;
-    }
-}
+// localStorage.removeItem(authToken);
