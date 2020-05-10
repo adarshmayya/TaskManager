@@ -38,6 +38,7 @@ export default class SignUp extends React.Component {
             }, {headers: { Authorization: `Bearer ${localStorage.authToken}`} })
                 .then((res) => {
                     console.log(res);
+                    localStorage.setItem("authToken",res.data.token);
                     this.props.history.push("/MainPage");
                 })
                 .catch(err => {
