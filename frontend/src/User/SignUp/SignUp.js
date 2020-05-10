@@ -38,7 +38,7 @@ export default class SignUp extends React.Component {
             }, {headers: { Authorization: `Bearer ${localStorage.authToken}`} })
                 .then((res) => {
                     console.log(res);
-                    this.props.history.push("/");
+                    this.props.history.push("/MainPage");
                 })
                 .catch(err => {
                     console.log(err);
@@ -66,7 +66,7 @@ export default class SignUp extends React.Component {
                     <input type="password" placeholder="Confirm Password" name="psw-confirm" ref={this.confirmPwd} required />
 
                     <button type="submit" className="signup-btn">Sign Up</button>
-                    <Link to="/Login" >
+                    <Link to="/" >
                     already have an account? Login
                     </Link>
                 </div>

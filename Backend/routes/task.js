@@ -3,7 +3,7 @@ const taskController = require("../controllers/task");
 const auth = require("../middlewares/auth");
 
 router.get("/", auth, taskController.getTasks);
-router.post("/", auth, taskController.newTask);
+router.post("/",auth,  taskController.newTask);
 router.put("/:id", auth, taskController.editTask);
 router.delete("/:id", auth, taskController.deleteTask);
 

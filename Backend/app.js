@@ -12,7 +12,9 @@ mongoose.connect("mongodb+srv://adarshmayya:devashyamayya3@cluster0-1jzgi.mongod
             console.log("Unable to connect to the MongoDB Atlas!");
             console.error(error);
         });
-
+        mongoose.set('useNewUrlParser', true);
+        mongoose.set('useFindAndModify', false);
+        mongoose.set('useCreateIndex', true);
 
 const app = express();
 

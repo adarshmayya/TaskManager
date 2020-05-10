@@ -30,7 +30,7 @@ exports.logIn = (req, res, next) => {
                 const token = jwt.sign(
                     {userId: user._id, username: user.username},
                     "my_secret_key",
-                    {expiresIn: "24h"}
+                    {expiresIn: 100000}
                 );
                 return res.status(200).json({
                     id: user._id,

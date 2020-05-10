@@ -38,8 +38,9 @@ export default class LogIn extends React.Component {
                 sessionStorage.setItem("isAuthenticated",true)
                //this.setState ({isauthenticated:true})
                 console.log("authentication successfull");
-               // this.authenticationHandler(res.data.token);
-                this.props.history.push("/");
+                localStorage.setItem("authToken",res.data.token);
+                //this.authenticationHandler(res.data.token);
+                this.props.history.push("/MainPage");
             })
             .catch((err) => {
                 //this.setState ({isauthenticated:false})

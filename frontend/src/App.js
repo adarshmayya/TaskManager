@@ -16,8 +16,8 @@ function App() {
            {sessionStorage.getItem("isAuthenticated") ? <Navbar /> : null }
               
                 <Switch>
-                  <Route path="/" exact component={MainPage} />
-                  <Route path="/login" component={LogIn} />
+                  <Route path="/" exact component={LogIn} />
+                  <Route path="/MainPage" component={MainPage} />
                   <Route path="/signup" component={SignUp} />
                 </Switch>
               

@@ -12,10 +12,13 @@
     justify-content: center;
     align-items: center;
     height: 100%;
+    width: 125%;
     box-shadow: 0 5px 5px rgb(231, 228, 225);
     background: url("../pattern.svg");
     background-repeat: no-repeat;
     background-size: cover;
+    
+   
 }
 
 

@@ -20,7 +20,8 @@ export default class MainPage extends React.Component {
         console.log(" authentication handler");
 
         // save token to the localStorage
-        localStorage.authToken = token;
+         localStorage.authToken = token;
+        // sessionStorage.setItem("authToken",token)
 
         this.loadTaskData((newList) => {
             this.setState({
@@ -32,8 +33,9 @@ export default class MainPage extends React.Component {
     }
 
     loadTaskData(callback) {
+        console.log(localStorage.authToken)
         console.log("loading task data");
-        axios.get(Config.domain + "/task", {headers: { Authorization: `Bearer ${localStorage.authToken}`} })
+        axios.get(Config.domain + "/task", {headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}`} })
             .then(res => {
                 const newList = res.data;
                 console.log("data received");

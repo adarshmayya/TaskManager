@@ -19,6 +19,7 @@ class NavBar extends React.Component{
 logout = () => {
   console.log("logout")
   localStorage.removeItem("Token");
+  localStorage.removeItem("authToken")
     this.setState({ redirect: true });
     sessionStorage.removeItem("isAuthenticated")
 
@@ -35,7 +36,7 @@ logout = () => {
 render() {
     if (this.state.redirect) {
         return (
-            <Redirect to={'/LogIn'} />
+            <Redirect to={'/'} />
         )
     }
 
